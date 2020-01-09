@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出-->
+<!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
+<Configuration status="WARN" monitorInterval="30">
+
+    <!--全局属性-->
+    <Properties>
+        <Property name="APP_NAME">Code-Generate</Property>
+        <Property name="LOG_FILE_PATH">/log/${APP_NAME}</Property>
+        <Property name="PATTERN_FORMAT">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%t] %class{36} (%L) %M - %msg%xEx%n</Property>
+    </Properties>
+
+    <Appenders>
+        <!--输出到控制台-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN_FORMAT}"/>
+        </Console>
+
+        <!-- INFO_LOG -->
+        <RollingFile name="INFO_LOG" fileName="${LOG_FILE_PATH}/info.log" filePattern="${LOG_FILE_PATH}/info.log_%d{yyyy-MM-dd}.log">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout>
+                <pattern>${PATTERN_FORMAT}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_FILE_PATH}" maxDepth="1">
+                    <IfFileName glob="info.log_*" />
+                    <IfLastModified age="5d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!-- DEBUG_LOG -->
+        <RollingFile name="DEBUG_LOG" fileName="${LOG_FILE_PATH}/debug.log" filePattern="${LOG_FILE_PATH}/debug.log_%d{yyyy-MM-dd}.log">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout>
+                <pattern>${PATTERN_FORMAT}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_FILE_PATH}" maxDepth="1">
+                    <IfFileName glob="debug.log_*" />
+                    <IfLastModified age="5d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!-- ERROR_LOG -->
+        <RollingFile name="ERROR_LOG" fileName="${LOG_FILE_PATH}/error.log" filePattern="${LOG_FILE_PATH}/error.log_%d{yyyy-MM-dd}.log">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>${PATTERN_FORMAT}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_FILE_PATH}" maxDepth="1">
+                    <IfFileName glob="error.log_*" />
+                    <IfLastModified age="5d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- LOG everything at DEBUG level includeLocation 处理日志所在行号 -->
+        <Root level="DEBUG" includeLocation="true">
+
+            <!-- Console 日志, 注释即不打印到控制台 -->
+            <AppenderRef ref="Console"/>
+
+            <AppenderRef ref="INFO_LOG"/>
+            <AppenderRef ref="DEBUG_LOG"/>
+            <AppenderRef ref="ERROR_LOG"/>
+        </Root>
+    </Loggers>
+</Configuration>
