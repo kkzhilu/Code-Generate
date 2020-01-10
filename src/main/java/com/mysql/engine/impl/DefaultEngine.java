@@ -100,6 +100,8 @@ public final class DefaultEngine extends AbstractEngine {
     @Override
     public void genService(ClassInfo classInfo) {
         genClass(classInfo, "code-generator/mybatis/service.ftl", "service", "Service.java");
+
+        genClass(classInfo, "code-generator/mybatis/service_impl.ftl", "service.impl", "ServiceImpl.java");
     }
 
     @Override

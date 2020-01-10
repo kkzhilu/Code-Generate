@@ -1,68 +1,88 @@
+package ${packageName}.service.impl;
+
+import ${packageName}.entity.*;
+import ${packageName}.common.PageList;
+import ${packageName}.dao.*;
+import ${packageName}.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
-* ${classInfo.classComment}
-* @author ${authorName}
-* @date ${.now?string('yyyy/MM/dd')}
-*/
+ * 业务层实现类
+ * ${classInfo.classComment}ServiceImpl
+ * @author ${authorName}
+ * @date ${.now?string('yyyy/MM/dd')}
+ */
 @Service
 public class ${classInfo.className}ServiceImpl implements ${classInfo.className}Service {
 
-	@Resource
-	private ${classInfo.className}Mapper ${classInfo.className?uncap_first}Mapper;
+    @Autowired
+	${classInfo.className}Dao dao;
 
+    @Override
+    public int insert(${classInfo.className} ${classInfo.modelName}) {
+        return dao.insert(${classInfo.modelName});
+    }
 
-	@Override
-	public ReturnT<String> insert(${classInfo.className} ${classInfo.className?uncap_first}) {
+    @Override
+    public int batchInsert(List<${classInfo.className}> list) {
+    	return dao.batchInsert(list);
+    }
 
-		// valid
-		if (${classInfo.className?uncap_first} == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "必要参数缺失");
-        }
+    @Override
+    public int update(${classInfo.className} ${classInfo.modelName}) {
+    	return dao.update(${classInfo.modelName});
+    }
 
-		${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
-        return ReturnT.SUCCESS;
-	}
+    @Override
+    public int delete(Object key) {
+    	return dao.delete(key);
+    }
 
-
-	@Override
-	public ReturnT<String> delete(int id) {
-		int ret = ${classInfo.className?uncap_first}Mapper.delete(id);
-		return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
-	}
-
-
-	@Override
-	public ReturnT<String> update(${classInfo.className} ${classInfo.className?uncap_first}) {
-		int ret = ${classInfo.className?uncap_first}Mapper.update(${classInfo.className?uncap_first});
-		return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
-	}
-
+    @Override
+    public int batchDelete(List<Object> keys) {
+        return dao.batchDelete(keys);
+    }
 
 	@Override
-	public ${classInfo.className} load(int id) {
-		return ${classInfo.className?uncap_first}Mapper.load(id);
+	public ${classInfo.className} selectByKey(Object key) {
+		return dao.selectByKey(key);
 	}
-
 
 	@Override
-	public Map<String,Object> pageList(int offset, int pagesize) {
-
-		List<${classInfo.className}> pageList = ${classInfo.className?uncap_first}Mapper.pageList(offset, pagesize);
-		int totalCount = ${classInfo.className?uncap_first}Mapper.pageListCount(offset, pagesize);
-
-		// result
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("pageList", pageList);
-		result.put("totalCount", totalCount);
-
-		return result;
+	public List<${classInfo.className}> selectList(${classInfo.className} ${classInfo.modelName}) {
+		return dao.selectList(${classInfo.modelName});
 	}
 
+	@Override
+	public PageList<${classInfo.className}> selectPage(${classInfo.className} ${classInfo.modelName}, Integer offset, Integer pageSize) {
+		PageList<${classInfo.className}> pageList = new PageList<>();
+
+		int total = this.total(${classInfo.modelName});
+
+		Integer totalPage;
+		if (total % pageSize != 0) {
+			totalPage = (total /pageSize) + 1;
+		} else {
+			totalPage = total /pageSize;
+		}
+
+		int page = (offset - 1) * pageSize;
+
+		List<${classInfo.className}> list = dao.selectPage(${classInfo.modelName}, page, pageSize);
+
+		pageList.setList(list);
+		pageList.setStartPageNo(offset);
+		pageList.setPageSize(pageSize);
+		pageList.setTotalCount(total);
+		pageList.setTotalPageCount(totalPage);
+		return pageList;
+	}
+
+	@Override
+	public int total(${classInfo.className} ${classInfo.modelName}) {
+		return dao.total(${classInfo.modelName});
+	}
 }
