@@ -26,6 +26,11 @@ public class ClassInfo {
     private String className;
 
     /**
+     * class实体参数名 如: classInfo
+     */
+    private String modelName;
+
+    /**
      * class注释
      */
     private String classComment;

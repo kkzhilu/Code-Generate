@@ -49,13 +49,21 @@ public final class DefaultEngine extends AbstractEngine {
         // 构建文件地址
         String path     = config.getPackageName().replace(".", SPACER);
         String rootPath = config.getRootPath() + File.separator + config.getProjectName();
-        String filePath = rootPath + "/src/main/java/" + path + SPACER
-                + parentPackage.replace(".", SPACER) + classInfo.getClassName() + classSuffix;
+
+        // Example: F:\code\Demo\src\main\java\com\demo\controller\ScriptDirController.java
+        String filePath = rootPath + SRC_MAIN_JAVA + path + SPACER
+                + parentPackage.replace(".", SPACER) + SPACER + classInfo.getClassName() + classSuffix;
         logger.info("文件地址:{}", filePath);
 
         process(classInfo, templateName, filePath);
     }
 
+    /***
+     * FreeMarker 模板固定方法
+     * @param classInfo
+     * @param templateName
+     * @param filePath
+     */
     private void process(ClassInfo classInfo, String templateName, String filePath) {
         try {
             File file = new File(filePath);
@@ -86,12 +94,12 @@ public final class DefaultEngine extends AbstractEngine {
 
     @Override
     public void genController(ClassInfo classInfo) {
-        genClass(classInfo, "code-generator/mybatis-plus/pluscontroller.ftl", "controller", "Controller.java");
+
     }
 
     @Override
     public void genService(ClassInfo classInfo) {
-
+        genClass(classInfo, "code-generator/mybatis/service.ftl", "service", "Service.java");
     }
 
     @Override
@@ -106,7 +114,7 @@ public final class DefaultEngine extends AbstractEngine {
 
     @Override
     public void genEntity(ClassInfo classInfo) {
-
+        genClass(classInfo, "code-generator/mybatis/model.ftl", "entity", ".java");
     }
 
     @Override
@@ -118,6 +126,8 @@ public final class DefaultEngine extends AbstractEngine {
     public void genConfig() {
 
     }
+
+    private static final String SRC_MAIN_JAVA = SPACER + "src" + SPACER + "main" + SPACER + "java" + SPACER;
 
     private static Logger logger = LoggerFactory.getLogger(DefaultEngine.class);
 }

@@ -1,35 +1,60 @@
+package ${packageName}.service;
+
 import java.util.Map;
+import java.util.List;
+import ${packageName}.entity.*;
+import ${packageName}.common.PageList;
 
 /**
-* ${classInfo.classComment}
-* @author ${authorName}
-* @date ${.now?string('yyyy/MM/dd')}
-*/
+ * 业务层
+ * ${classInfo.classComment}Service
+ * @author ${authorName}
+ * @date ${.now?string('yyyy/MM/dd')}
+ */
 public interface ${classInfo.className}Service {
 
     /**
-    * 新增
-    */
-    public ReturnT<String> insert(${classInfo.className} ${classInfo.className?uncap_first});
+     * [新增]
+     **/
+    int insert(${classInfo.className} ${classInfo.modelName});
 
     /**
-    * 删除
-    */
-    public ReturnT<String> delete(int id);
+     * [批量新增]
+     **/
+    int batchInsert(List<${classInfo.className}> list);
 
     /**
-    * 更新
-    */
-    public ReturnT<String> update(${classInfo.className} ${classInfo.className?uncap_first});
+     * [更新]
+     **/
+    int update(${classInfo.className} ${classInfo.modelName});
 
     /**
-    * 根據主鍵 id 查詢
-    */
-    public ${classInfo.className} load(int id);
+     * [删除]
+     **/
+    int delete(Object key);
 
     /**
-    * 分页查询
-    */
-    public Map<String,Object> pageList(int offset, int pagesize);
+     * [批量删除]
+     **/
+    int batchDelete(List<Object> keys);
 
+    /**
+     * [主键查询]
+     **/
+    ScriptDir selectByKey(Object key);
+
+    /**
+     * [条件查询]
+     **/
+    List<${classInfo.className}> selectList (${classInfo.className} ${classInfo.modelName});
+
+    /**
+     * [分页条件查询]
+     **/
+    PageList<${classInfo.className}> selectPage (${classInfo.className} ${classInfo.modelName}, Integer page, Integer pageSize);
+
+    /**
+     * [总量查询]
+     **/
+    int total(${classInfo.className} ${classInfo.modelName});
 }

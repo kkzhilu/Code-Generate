@@ -43,6 +43,7 @@ public class DataBaseUtil {
         // className信息
         String className = StringUtils.upperCaseFirst(StringUtils.underlineToCamelCase(tableName));
         classInfo.setClassName(className);
+        classInfo.setModelName(StringUtils.lowerCaseFirst(className));
         classInfo.setClassComment(className);
 
         List<FieldInfo> fieldList = new ArrayList<>();
@@ -113,6 +114,7 @@ public class DataBaseUtil {
         typeMapping.put("datetime"  , "Date");
         typeMapping.put("timestamp" , "Date");
         typeMapping.put("bit"       , "Integer");
+        typeMapping.put("tinyint"   , "Integer");
         typeMapping.put("year"      , "Date");
         typeMapping.put("date"      , "Date");
         typeMapping.put("bigint"    , "Long");
