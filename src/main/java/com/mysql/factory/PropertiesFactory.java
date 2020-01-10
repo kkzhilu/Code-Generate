@@ -1,7 +1,7 @@
 package com.mysql.factory;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mysql.bean.Configuration;
+import com.mysql.bean.ConfigurationInfo;
 import com.mysql.bean.GlobleConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +49,9 @@ public class PropertiesFactory {
             json.put(KEYS[i], value);
         }
 
-        Configuration configuration = json.toJavaObject(Configuration.class);
+        ConfigurationInfo configurationInfo = json.toJavaObject(ConfigurationInfo.class);
 
-        GlobleConfig.setGlobleConfig(configuration);
+        GlobleConfig.setGlobleConfig(configurationInfo);
         logger.info("Properties load Successful, Msg is: " + json);
     }
 

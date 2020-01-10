@@ -11,7 +11,7 @@ import lombok.Data;
  * ******************************
  */
 @Data
-public class Configuration {
+public class ConfigurationInfo {
 
     /**
      * Ip

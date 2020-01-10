@@ -15,16 +15,16 @@ import java.io.IOException;
 public final class GlobleConfig {
 
     // 配置信息
-    private static Configuration CONFIGURATION = null;
+    private static ConfigurationInfo CONFIGURATIONInfo = null;
 
     /***
      * 获取全局配置
      * 单例模式 双重锁校验
      */
-    public static Configuration getGlobleConfig() {
-        if (null == CONFIGURATION) {
+    public static ConfigurationInfo getGlobleConfig() {
+        if (null == CONFIGURATIONInfo) {
             synchronized (GlobleConfig.class) {
-                if (null == CONFIGURATION) {
+                if (null == CONFIGURATIONInfo) {
                     try {
                         PropertiesFactory.loadProperties();
                     } catch (IOException e) {
@@ -33,11 +33,11 @@ public final class GlobleConfig {
                 }
             }
         }
-        return CONFIGURATION;
+        return CONFIGURATIONInfo;
     }
 
-    public static void setGlobleConfig(Configuration CONFIGURATION) {
-        GlobleConfig.CONFIGURATION = CONFIGURATION;
+    public static void setGlobleConfig(ConfigurationInfo CONFIGURATIONInfo) {
+        GlobleConfig.CONFIGURATIONInfo = CONFIGURATIONInfo;
     }
 
     private GlobleConfig() {}

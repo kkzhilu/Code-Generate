@@ -1,6 +1,6 @@
 package com.mysql.util;
 
-import com.mysql.bean.Configuration;
+import com.mysql.bean.ConfigurationInfo;
 import com.mysql.bean.GlobleConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class DBUtil {
     }
 
     private static Connection produceConnection() throws Exception {
-        Configuration config = GlobleConfig.getGlobleConfig();
+        ConfigurationInfo config = GlobleConfig.getGlobleConfig();
         String url = String.format("jdbc:mysql://%s:%s/%s?characterEncoding=%s", config.getIp(), config.getPort(), config.getDataBase(), config.getEncoding());
         return DriverManager.getConnection(url, config.getLoginName(), config.getPassWord());
     }
