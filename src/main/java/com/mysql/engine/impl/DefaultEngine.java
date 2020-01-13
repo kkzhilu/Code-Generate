@@ -89,12 +89,28 @@ public final class DefaultEngine extends AbstractEngine {
 
     @Override
     public void genFix() {
+        // 生成固定文件 ApiResult,PageList,ResultCode
+        ClassInfo apiResult = new ClassInfo();
+        apiResult.setClassName("ApiResult");
+        genClass(apiResult, "code-generator/common/ApiResult.ftl"  , "common", ".java");
 
+        ClassInfo pageList = new ClassInfo();
+        pageList.setClassName("PageList");
+        genClass(pageList, "code-generator/common/PageList.ftl"    , "common", ".java");
+
+        ClassInfo resultCode = new ClassInfo();
+        resultCode.setClassName("ResultCode");
+        genClass(resultCode, "code-generator/common/ResultCode.ftl", "common", ".java");
+
+        // Application.class
+        ClassInfo application = new ClassInfo();
+        application.setClassName("Application");
+        genClass(application, "code-generator/common/Application.ftl", "", ".java");
     }
 
     @Override
     public void genController(ClassInfo classInfo) {
-
+        genClass(classInfo, "code-generator/mybatis/controller.ftl", "web", "Controller.java");
     }
 
     @Override
@@ -106,12 +122,20 @@ public final class DefaultEngine extends AbstractEngine {
 
     @Override
     public void genRepositoryClass(ClassInfo classInfo) {
-
+        genClass(classInfo, "code-generator/mybatis/mapper.ftl", "dao", "Dao.java");
     }
 
     @Override
     public void genRepositoryXml(ClassInfo classInfo) {
+        // 构建文件地址
+        String path     = config.getPackageName().replace(".", SPACER);
+        String rootPath = config.getRootPath() + File.separator + config.getProjectName();
 
+        // Example: C:\Users\Administrator\Desktop\Codes\KerwinBoots\src\main\resources\mapper\ScriptDirMapper.xml
+        String filePath = rootPath + SRC_MAIN_RESOURCE + SPACER + "mapper" + SPACER
+                        + classInfo.getClassName() + "Mapper.xml";
+
+        process(classInfo, "code-generator/mybatis/mapper_xml.ftl", filePath);
     }
 
     @Override
@@ -126,10 +150,31 @@ public final class DefaultEngine extends AbstractEngine {
 
     @Override
     public void genConfig() {
+        // 构建文件地址
+        String path     = config.getPackageName().replace(".", SPACER);
+        String rootPath = config.getRootPath() + File.separator + config.getProjectName();
 
+        // POM依赖
+        ClassInfo pom = new ClassInfo();
+        pom.setClassName("pom");
+        process(pom, "code-generator/common/pom.ftl", rootPath + POM + pom.getClassName() + ".xml");
+
+        // logback日志
+        ClassInfo log = new ClassInfo();
+        log.setClassName("logback-spring");
+        process(log, "code-generator/common/logback-spring.ftl", rootPath + SRC_MAIN_RESOURCE + log.getClassName() + ".xml");
+
+        // 配置文件
+        ClassInfo properties = new ClassInfo();
+        properties.setClassName("application");
+        process(properties, "code-generator/common/applicationCongih.ftl", rootPath + SRC_MAIN_RESOURCE + properties.getClassName() + ".properties");
     }
 
-    private static final String SRC_MAIN_JAVA = SPACER + "src" + SPACER + "main" + SPACER + "java" + SPACER;
+    private static final String SRC_MAIN_JAVA     = SPACER + "src" + SPACER + "main" + SPACER + "java" + SPACER;
+
+    private static final String SRC_MAIN_RESOURCE = SPACER + "src" + SPACER + "main" + SPACER + "resources" + SPACER;
+
+    private static final String POM               = SPACER;
 
     private static Logger logger = LoggerFactory.getLogger(DefaultEngine.class);
 }

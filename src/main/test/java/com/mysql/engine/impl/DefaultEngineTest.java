@@ -1,9 +1,7 @@
 package com.mysql.engine.impl;
 
 import com.mysql.bean.ClassInfo;
-import com.mysql.engine.Executor;
 import com.mysql.factory.ClassInfoFactory;
-import com.mysql.factory.PropertiesFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +27,7 @@ public class DefaultEngineTest {
 
     @Test
     public void genFix() {
-
+        executor.genFix();
     }
 
     @Test
@@ -48,10 +46,16 @@ public class DefaultEngineTest {
 
     @Test
     public void genRepositoryClass() {
+        for (ClassInfo classInfo : classInfos) {
+            executor.genRepositoryClass(classInfo);
+        }
     }
 
     @Test
     public void genRepositoryXml() {
+        for (ClassInfo classInfo : classInfos) {
+            executor.genRepositoryXml(classInfo);
+        }
     }
 
     @Test
@@ -67,5 +71,6 @@ public class DefaultEngineTest {
 
     @Test
     public void genConfig() {
+        executor.genConfig();
     }
 }

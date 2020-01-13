@@ -35,6 +35,11 @@ public class ClassInfo {
      */
     private String classComment;
 
+    /***
+     * 主键字段及值 (默认以持有字段的 index=0 为主键)
+     */
+    private FieldInfo key;
+
     /**
      * 持有字段
      */

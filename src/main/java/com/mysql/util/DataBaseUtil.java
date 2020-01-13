@@ -1,17 +1,16 @@
 package com.mysql.util;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.mysql.bean.ClassInfo;
 import com.mysql.bean.FieldInfo;
 import com.mysql.bean.GlobleConfig;
+import freemarker.template.utility.CollectionUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * ******************************
@@ -61,6 +60,14 @@ public class DataBaseUtil {
         }
 
         classInfo.setFieldList(fieldList);
+
+        // 设置主键字段
+        if (CollectionUtil.isEmpty(fieldList)) {
+            classInfo.setKey(new FieldInfo());
+        } else {
+            classInfo.setKey(fieldList.get(0));
+        }
+
         tableResult.close();
         statement.close();
         return classInfo;

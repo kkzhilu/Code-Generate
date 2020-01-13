@@ -4,86 +4,136 @@
 <mapper namespace="${packageName}.dao.${classInfo.className}Dao">
 
     <resultMap id="BaseResultMap" type="${packageName}.entity.${classInfo.className}" >
-        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-            <#list classInfo.fieldList as fieldItem >
-                <result column="${fieldItem.columnName}" property="${fieldItem.fieldName}" />
-            </#list>
-        </#if>
+    <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+    <#list classInfo.fieldList as fieldItem >
+        <result column="${fieldItem.columnName}" property="${fieldItem.fieldName}" />
+    </#list>
+    </#if>
     </resultMap>
 
     <sql id="Base_Column_List">
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-            <#list classInfo.fieldList as fieldItem >
-                `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
-            </#list>
+        <#list classInfo.fieldList as fieldItem >
+        `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
+        </#list>
         </#if>
     </sql>
 
-    <insert id="insert" useGeneratedKeys="true" keyColumn="id" parameterType="${packageName}.entity.${classInfo.className}">
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="${packageName}.entity.${classInfo.className}">
         INSERT INTO ${classInfo.tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-                <#list classInfo.fieldList as fieldItem >
-                    <#if fieldItem.columnName != "id_" >
-                        ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                        `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
-                        ${r"</if>"}
-                    </#if>
-                </#list>
+            <#list classInfo.fieldList as fieldItem >
+            <#if fieldItem.columnName != "id_" >
+            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
+            ${r"</if>"}
+            </#if>
+            </#list>
             </#if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-                <#list classInfo.fieldList as fieldItem >
-                    <#if fieldItem.columnName != "id_" >
-                    <#--<#if fieldItem.columnName="addtime" || fieldItem.columnName="updatetime" >
-                    ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                        NOW()<#if fieldItem_has_next>,</#if>
-                    ${r"</if>"}
-                    <#else>-->
-                        ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                        ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>
-                        ${r"</if>"}
-                    <#--</#if>-->
-                    </#if>
-                </#list>
+            <#list classInfo.fieldList as fieldItem >
+            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>
+            ${r"</if>"}
+            </#list>
             </#if>
         </trim>
     </insert>
 
-    <delete id="delete" >
-        DELETE FROM ${classInfo.tableName}
-        WHERE `id_` = ${r"#{id}"}
-    </delete>
+    <!-- 批量插入数据 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO ${classInfo.tableName} ( <include refid="Base_Column_List" /> ) VALUES
+        <foreach collection="list" item="curr" index="index" separator=",">
+            (
+            <#list classInfo.fieldList as fieldItem >
+                ${r"#{"}curr.${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>
+            </#list>
+            )
+        </foreach>
+    </insert>
 
+    <!-- 更新 -->
     <update id="update" parameterType="${packageName}.entity.${classInfo.className}">
         UPDATE ${classInfo.tableName}
         <set>
-            <#list classInfo.fieldList as fieldItem >
-                <#if fieldItem.columnName != "id_" && fieldItem.columnName != "AddTime" && fieldItem.columnName != "UpdateTime" >
-                    ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}${fieldItem.columnName} = ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>${r"</if>"}
-                </#if>
-            </#list>
+        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+        <#list classInfo.fieldList as fieldItem >
+        <#if fieldItem.fieldName != classInfo.key.fieldName>
+            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}${fieldItem.columnName} = ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>${r"</if>"}
+        </#if>
+        </#list>
+        </#if>
         </set>
-        WHERE `id_` = ${r"#{"}id${r"}"}
+        WHERE ${classInfo.key.columnName} = ${classInfo.key.fieldName}
     </update>
 
+    <!-- 删除 -->
+    <delete id="delete">
+        DELETE FROM ${classInfo.tableName}
+        WHERE ${classInfo.key.columnName} = ${r"#{"}key${r"}"}
+    </delete>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType = "java.util.List">
+        DELETE FROM ${classInfo.tableName} WHERE ${classInfo.key.columnName} IN
+        <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+            ${r"#{"}item${r"}"}
+        </foreach>
+    </delete>
+
+    <!-- 主键查询 -->
+    <select id="selectByKey" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
         FROM ${classInfo.tableName}
-        WHERE `id_` = ${r"#{id}"}
+        WHERE ${classInfo.key.columnName} = ${r"#{"}key${r"}"}
     </select>
 
-    <select id="pageList" resultMap="BaseResultMap">
+    <!-- 条件查询 -->
+    <select id="selectList" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
         FROM ${classInfo.tableName}
-        LIMIT ${r"#{offset}"}, ${r"#{pageSize}"}
+        <where>
+            <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+            <#list classInfo.fieldList as fieldItem >
+            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                and ${r"#{"}${fieldItem.fieldName}${r"}"}
+            ${r"</if>"}
+            </#list>
+            </#if>
+        </where>
     </select>
 
-    <select id="pageListCount" resultType="java.lang.Integer">
-        SELECT count(1)
+    <!-- 分页条件查询 -->
+    <select id="selectPage" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
         FROM ${classInfo.tableName}
+        <where>
+            <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+            <#list classInfo.fieldList as fieldItem>
+            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                and ${r"#{"}${fieldItem.fieldName}${r"}"}
+            ${r"</if>"}
+            </#list>
+            </#if>
+        </where>
+        limit ${r"#{"}page,jdbcType=INTEGER${r"}"}, ${r"#{"}pageSize,jdbcType=INTEGER${r"}"}
     </select>
 
+    <!-- 总量查询 -->
+    <select id="total" resultType="java.lang.Integer">
+        SELECT count(${classInfo.key.columnName}) FROM ${classInfo.tableName}
+        <where>
+        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+        <#list classInfo.fieldList as fieldItem>
+            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                and ${r"#{"}${fieldItem.fieldName}${r"}"}
+            ${r"</if>"}
+        </#list>
+        </#if>
+        </where>
+    </select>
 </mapper>
