@@ -10,7 +10,12 @@ import com.mysql.bean.ClassInfo;
  * version:      V1.0
  * ******************************
  */
-public interface GeneralEngine extends Executor {
+public interface GeneralEngine {
+
+    /***
+     * 执行器执行
+     */
+    void execute();
 
     /**
      * 生成固有的文件

@@ -4,13 +4,15 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.mysql.bean.ClassInfo;
 import com.mysql.bean.FieldInfo;
 import com.mysql.bean.GlobleConfig;
-import freemarker.template.utility.CollectionUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ******************************

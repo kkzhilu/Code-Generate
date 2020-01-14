@@ -1,5 +1,7 @@
 package com.mysql;
 
+import com.mysql.engine.AbstractEngine;
+
 /**
  * ******************************
  * author：      柯贤铭
@@ -10,5 +12,11 @@ package com.mysql;
  */
 public class App {
 
-
+    /***
+     * 执行 - 构建项目
+     */
+    public static void main(String[] args){
+        AbstractEngine engine = AbstractEngine.init();
+        engine.execute();
+    }
 }

@@ -1,10 +1,16 @@
 package com.mysql.engine;
 
 import com.mysql.bean.ClassInfo;
+import com.mysql.bean.GlobleConfig;
+import com.mysql.engine.impl.DefaultEngine;
+import com.mysql.factory.ClassInfoFactory;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -40,14 +46,30 @@ public abstract class AbstractEngine implements GeneralEngine {
     }
 
     @Override
-    public void execute(ClassInfo classInfo) {
-        genFix();
-        genController(classInfo);
-        genEntity(classInfo);
-        genRepositoryClass(classInfo);
-        genService(classInfo);
-        genRepositoryXml(classInfo);
-        genUi(classInfo);
-        genConfig();
+    public void execute() {
+        List<ClassInfo> classInfos = ClassInfoFactory.getClassInfoList();
+        for (ClassInfo classInfo : classInfos) {
+            genController(classInfo);
+            genEntity(classInfo);
+            genRepositoryClass(classInfo);
+            genService(classInfo);
+            genRepositoryXml(classInfo);
+            genUi(classInfo);
+            genConfig();
+            genFix();
+        }
+
+        logger.info(GlobleConfig.getGlobleConfig().getProjectName() + " Build Complete.");
     }
+
+    /***
+     * 初始化工程
+     * 加载配置文件, 加载数据库连接, 加载数据表字段信息, 加载FreeMaker模板
+     * 获得执行器
+     */
+    public static AbstractEngine init() {
+        return new DefaultEngine();
+    }
+
+    private static Logger logger = LoggerFactory.getLogger(AbstractEngine.class);
 }
