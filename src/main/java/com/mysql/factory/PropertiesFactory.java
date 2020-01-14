@@ -6,6 +6,8 @@ import com.mysql.bean.GlobleConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -37,7 +39,15 @@ public class PropertiesFactory {
      * @throws IOException 默认抛出IO异常
      */
     public static void loadProperties() throws IOException {
-        InputStream inStream = PropertiesFactory.class.getClassLoader().getResourceAsStream("application.properties");
+        // 兼容Jar包外 处理配置文件
+        String filePath = System.getProperty("user.dir") + File.separator + "application.properties";
+        InputStream inStream;
+        if (new File(filePath).exists()) {
+            inStream = new FileInputStream(filePath);
+        } else {
+            inStream = PropertiesFactory.class.getClassLoader().getResourceAsStream("application.properties");
+        }
+
         Properties prop = new Properties();
         prop.load(inStream);
 

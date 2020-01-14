@@ -7,6 +7,7 @@
     <groupId>com.mysql</groupId>
     <artifactId>Code-Generate</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -155,17 +156,6 @@
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.7.1</version>
-                </plugin>
-
-                <!-- 对xls模板打包但不编译 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <configuration>
-                        <nonFilteredFileExtensions>
-                            <nonFilteredFileExtension>xls</nonFilteredFileExtension>
-                        </nonFilteredFileExtensions>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
