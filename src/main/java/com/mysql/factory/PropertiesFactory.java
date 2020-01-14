@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -33,6 +35,7 @@ public class PropertiesFactory {
      */
     private static final String[] VALUES = {"127.0.0.1", "3306", "com.mysql.jdbc.Driver", "db_file", "UTF-8", "root", ""
             , "Demo", "com.demo", "Kerwin", "F:\\code"};
+
 
     /***
      * 加载全局配置
