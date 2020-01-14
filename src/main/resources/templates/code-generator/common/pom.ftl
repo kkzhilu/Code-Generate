@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>${packageName}</groupId>
-    <artifactId>${authorName}</artifactId>
+    <artifactId>${projectName}</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>${projectName}</name>
     <description>the Spring Boot Demo of Kerwin</description>

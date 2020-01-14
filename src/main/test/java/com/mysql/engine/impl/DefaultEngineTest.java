@@ -5,7 +5,6 @@ import com.mysql.factory.ClassInfoFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class DefaultEngineTest {
     private DefaultEngine executor = null;
 
     @Before
-    public void before() throws IOException {
+    public void before() {
 
         classInfos = ClassInfoFactory.getClassInfoList();
 

@@ -2,9 +2,9 @@ package ${packageName}.web;
 
 import com.alibaba.fastjson.JSONObject;
 import ${packageName}.entity.*;
-import ${packageName}.ApiResult;
-import ${packageName}.PageList;
-import ${packageName}.ResultCode;
+import ${packageName}.common.ApiResult;
+import ${packageName}.common.PageList;
+import ${packageName}.common.ResultCode;
 import ${packageName}.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping(value = "/${classInfo.modelName}")
 public class ${classInfo.className}Controller {
 
-    @Resource
+    @Autowired
     ${classInfo.className}Service service;
 
     /**
