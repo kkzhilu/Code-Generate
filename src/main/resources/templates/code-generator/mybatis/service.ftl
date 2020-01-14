@@ -41,7 +41,7 @@ public interface ${classInfo.className}Service {
     /**
      * [主键查询]
      **/
-    ScriptDir selectByKey(Object key);
+    ${classInfo.className} selectByKey(Object key);
 
     /**
      * [条件查询]

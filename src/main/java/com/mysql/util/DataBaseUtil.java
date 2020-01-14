@@ -124,6 +124,7 @@ public class DataBaseUtil {
         typeMapping.put("timestamp" , "Date");
         typeMapping.put("bit"       , "Integer");
         typeMapping.put("tinyint"   , "Integer");
+        typeMapping.put("smallint"  , "Integer");
         typeMapping.put("year"      , "Date");
         typeMapping.put("date"      , "Date");
         typeMapping.put("bigint"    , "Long");
