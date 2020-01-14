@@ -3,6 +3,7 @@ package com.mysql.factory;
 import com.alibaba.fastjson.JSONObject;
 import com.mysql.bean.ConfigurationInfo;
 import com.mysql.bean.GlobleConfig;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,14 +29,13 @@ public class PropertiesFactory {
      * 配置文件KEYS
      */
     private static final String[] KEYS = {"ip", "port", "driver", "dataBase", "encoding", "loginName", "passWord"
-            , "projectName", "packageName", "authorName", "rootPath"};
+            , "include", "projectName", "packageName", "authorName", "rootPath"};
 
     /***
      * 配置文件默认Values
      */
     private static final String[] VALUES = {"127.0.0.1", "3306", "com.mysql.jdbc.Driver", "db_file", "UTF-8", "root", ""
-            , "Demo", "com.demo", "Kerwin", "F:\\code"};
-
+            , "*", "Demo", "com.demo", "Kerwin", "F:\\code"};
 
     /***
      * 加载全局配置
@@ -63,9 +63,27 @@ public class PropertiesFactory {
         }
 
         ConfigurationInfo configurationInfo = json.toJavaObject(ConfigurationInfo.class);
+        configurationInfo.setIncludeMap(parseInclude(configurationInfo.getInclude()));
 
         GlobleConfig.setGlobleConfig(configurationInfo);
         logger.info("Properties load Successful, Msg is: " + json);
+    }
+
+    /***
+     * 解析需要构造的表Map方法
+     */
+    private static Map<String, String> parseInclude(String include) {
+        Map<String, String> result = new HashMap<>();
+        if (StringUtils.isBlank(include)) {
+            return result;
+        }
+
+        String[] strings = include.split(";");
+        for (String key : strings) {
+            result.put(key, key);
+        }
+
+        return result;
     }
 
     private static Logger logger = LoggerFactory.getLogger(PropertiesFactory.class);

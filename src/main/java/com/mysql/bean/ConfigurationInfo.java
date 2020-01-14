@@ -2,6 +2,8 @@ package com.mysql.bean;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * ******************************
  * author：      柯贤铭
@@ -47,6 +49,16 @@ public class ConfigurationInfo {
      * 密码
      */
     private String passWord;
+
+    /***
+     * 需要处理的表名 以 ; 划分
+     */
+    private String include;
+
+    /***
+     * 需要处理的表名Map
+     */
+    private Map<String, String> includeMap;
 
     /**
      * 项目名

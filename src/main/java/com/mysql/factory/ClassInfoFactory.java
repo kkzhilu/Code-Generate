@@ -2,10 +2,13 @@ package com.mysql.factory;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.mysql.bean.ClassInfo;
+import com.mysql.bean.ConfigurationInfo;
+import com.mysql.bean.GlobleConfig;
 import com.mysql.util.DataBaseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ******************************
@@ -24,10 +27,16 @@ public class ClassInfoFactory {
             synchronized (ClassInfoFactory.class) {
                 if (CollectionUtil.isEmpty(CLASS_INFO_LIST)) {
                     try {
+                        // 获取配置项
+                        ConfigurationInfo config = GlobleConfig.getGlobleConfig();
+
                         List<String> tableNames = DataBaseUtil.getAllTableNames();
                         for (String tableName : tableNames) {
-                            ClassInfo classInfo = DataBaseUtil.parseClassInfo(tableName);
-                            CLASS_INFO_LIST.add(classInfo);
+                            // 仅加载 *; 配置项 或者 include包含项才进行处理
+                            if("*;".equals(config.getInclude()) || config.getIncludeMap().containsKey(tableName)) {
+                                ClassInfo classInfo = DataBaseUtil.parseClassInfo(tableName);
+                                CLASS_INFO_LIST.add(classInfo);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
