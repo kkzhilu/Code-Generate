@@ -2,6 +2,7 @@ package com.mysql.engine;
 
 import com.mysql.bean.ClassInfo;
 import com.mysql.bean.GlobleConfig;
+import com.mysql.engine.impl.CustomEngineImpl;
 import com.mysql.engine.impl.DefaultEngine;
 import com.mysql.factory.ClassInfoFactory;
 import freemarker.cache.ClassTemplateLoader;
@@ -60,6 +61,10 @@ public abstract class AbstractEngine implements GeneralEngine {
         }
 
         logger.info(GlobleConfig.getGlobleConfig().getProjectName() + " Build Complete.");
+
+        // 执行自定义拦截接口 执行
+        logger.info("=== Begin To Execute Custom Module... ===");
+        CustomEngineImpl.handleCustom();
     }
 
     /***
