@@ -16,7 +16,7 @@
 该项目为普通Java项目，使用时需要本地Java环境 + 可连接的Mysql数据库
 
 拉取代码后，对如下内容进行配置（```resources/application.properties```）即可
-![image-20200203181537363](http://ww1.sinaimg.cn/large/006j28Gply1gbjebybgz9j30jr0fl0t9.jpg)
+![image-20200203181537363](https://raw.githubusercontent.com/kkzhilu/Code-Generate/master/img/1.png)
 
 
 
@@ -42,13 +42,13 @@ public class App {
 
 数据库如下图所示：
 
-![image-20200203182200943](http://ww1.sinaimg.cn/large/006j28Gply1gbjecuobvrj306j053a9w.jpg)
+![image-20200203182200943](https://raw.githubusercontent.com/kkzhilu/Code-Generate/master/img/2.png)
 
 
 
 代码生成编译运行图：
 
-![image-20200203182231778](http://ww1.sinaimg.cn/large/006j28Gply1gbjed1xgpvj311y0kjtcl.jpg)
+![image-20200203182231778](https://raw.githubusercontent.com/kkzhilu/Code-Generate/master/img/3.png)
 
 
 
