@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.mysql.bean.ClassInfo;
 import com.mysql.bean.FieldInfo;
 import com.mysql.bean.GlobleConfig;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,6 +59,11 @@ public class DataBaseUtil {
             String fieldName = StringUtil.underlineToCamelCase(tableResult.getString(1));
             fieldInfo.setFieldName(fieldName);
             fieldInfo.setFieldComment(tableResult.getString(3));
+
+            // 维护表结构字段 2 data_type,4 6 length, 7 nullAble
+            fieldInfo.setDataType(tableResult.getString(2));
+            fieldInfo.setMaxLength(StringUtils.isNotBlank(tableResult.getString(4)) ? tableResult.getString(4) : tableResult.getString(6));
+            fieldInfo.setNullAble(tableResult.getString(7));
             fieldList.add(fieldInfo);
         }
 

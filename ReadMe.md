@@ -61,7 +61,7 @@ public class App {
 - logback日志
 - SpringBoot
 - 拔插式拦截器（基于org.reflections实现）- 支持继承指定接口，不改变其他代码情况下实现想要的功能
-
+- 自动生成表结构Md文档
 
 
 ## 协议
@@ -78,3 +78,7 @@ GNU General Public License v3.0
 
 点我：[GitHub地址]( https://github.com/kkzhilu/Code-Generate/tree/master )
 
+
+## 更新
+
+- 2020年2月11日, 新增自动生成表结构说明文档 (基于自动拦截接口实现)

@@ -79,4 +79,9 @@ public class ConfigurationInfo {
      * 文件根目录
      */
     private String rootPath;
+
+    /**
+     * 项目根目录
+     */
+    private String projectPath;
 }

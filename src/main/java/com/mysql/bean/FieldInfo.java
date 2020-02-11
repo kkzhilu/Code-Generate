@@ -32,4 +32,12 @@ public class FieldInfo {
      * 字段注释
      */
     private String fieldComment;
+
+    // ***************************** 以下内容作为表结构文件映射内容
+
+    private String  dataType;
+
+    private String  maxLength;
+
+    private String  nullAble;
 }

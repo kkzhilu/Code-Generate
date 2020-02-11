@@ -65,6 +65,10 @@ public class PropertiesFactory {
         ConfigurationInfo configurationInfo = json.toJavaObject(ConfigurationInfo.class);
         configurationInfo.setIncludeMap(parseInclude(configurationInfo.getInclude()));
 
+        // 解析项目目录地址
+        String projectPath = configurationInfo.getRootPath() + File.separator + configurationInfo.getProjectName();
+        configurationInfo.setProjectPath(projectPath);
+
         GlobleConfig.setGlobleConfig(configurationInfo);
         logger.info("Properties load Successful, Msg is: " + json);
     }
