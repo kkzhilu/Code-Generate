@@ -15,7 +15,7 @@ import java.io.IOException;
 public final class GlobleConfig {
 
     // 配置信息
-    private static ConfigurationInfo CONFIGURATIONInfo = null;
+    private volatile static ConfigurationInfo CONFIGURATIONInfo = null;
 
     /***
      * 获取全局配置

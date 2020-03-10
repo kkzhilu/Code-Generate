@@ -19,7 +19,7 @@ import java.sql.DriverManager;
  */
 public class DBUtil {
 
-    private static Connection conn = null;
+    private volatile static Connection conn = null;
 
     private static Logger logger = LoggerFactory.getLogger(DBUtil.class);
 
