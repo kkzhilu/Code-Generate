@@ -1,15 +1,19 @@
 package ${packageName}.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import ${packageName}.entity.*;
 import ${packageName}.common.ApiResult;
 import ${packageName}.common.PageList;
 import ${packageName}.common.ResultCode;
 import ${packageName}.service.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +37,8 @@ public class ${classInfo.className}Controller {
      * 参数请求报文:
      *
      * {
-     *   "eid": 9999,
-     *   "projectid": 999,
-     *   "parentDirId": 999
+     *   "paramOne": 1,
+     *   "paramTwo": "xxx"
      * }
      */
     @RequestMapping(value = "/insert")
@@ -50,16 +53,12 @@ public class ${classInfo.className}Controller {
      *
      * [
      *     {
-     *         "eid": 9999,
-     *         "projectid": 999,
-     *         "parentDirId": 999,
-     *         "scriptDirName": "sdasd"
+     *       "paramOne": 1,
+     *       "paramTwo": "xxx"
      *     },
      *     {
-     *         "eid": 9999,
-     *         "projectid": 999,
-     *         "parentDirId": 999,
-     *         "scriptDirName": "sdasd"
+     *       "paramOne": 1,
+     *       "paramTwo": "xxx"
      *     }
      * ]
      */
@@ -74,9 +73,8 @@ public class ${classInfo.className}Controller {
      * 参数请求报文:
      *
      * {
-     *   "eid": 9999,
-     *   "projectid": 999,
-     *   "parentDirId": 999
+     *   "paramOne": 1,
+     *   "paramTwo": "xxx"
      * }
      */
     @RequestMapping(value = "/update")
@@ -133,9 +131,8 @@ public class ${classInfo.className}Controller {
     * 参数请求报文:
     *
     * {
-    *   "eid": 9999,
-    *   "projectid": 999,
-    *   "parentDirId": 999
+    *   "paramOne": 1,
+    *   "paramTwo": "xxx"
     * }
     */
     @RequestMapping(value = "/selectList")
@@ -149,9 +146,8 @@ public class ${classInfo.className}Controller {
      * 参数请求报文:
      *
      * {
-     *     "eid": 1,
-     *     "page": 1,
-     *     "pageSize": 15
+     *   "paramOne": 1,
+     *   "paramTwo": "xxx"
      * }
      */
     @RequestMapping(value = "/selectPage")
@@ -167,5 +163,91 @@ public class ${classInfo.className}Controller {
         ${classInfo.className} ${classInfo.modelName} = object.toJavaObject(${classInfo.className}.class);
         PageList<${classInfo.className}> pageList = service.selectPage(${classInfo.modelName}, page, pageSize);
         return new ApiResult<>(ResultCode.success.getCode(), pageList, ResultCode.success.getDescr(), request.getRequestURI());
+    }
+
+    /***
+     * 表单查询请求
+     * @param searchParams Bean对象JSON字符串
+     * @param page         页码
+     * @param limit        每页显示数量
+     */
+    @RequestMapping(value = "/formPage")
+    @ResponseBody
+    public String formPage (@RequestParam(value = "searchParams", required = false) String  searchParams,
+                            @RequestParam(value = "page"        , required = false, defaultValue = "1") Integer page,
+                            @RequestParam(value = "limit"       , required = false, defaultValue = "15") Integer limit) {
+        ${classInfo.className} query = new ${classInfo.className}();
+        if (StringUtils.isNotBlank(searchParams)) {
+            JSONObject object = JSON.parseObject(searchParams);
+            query = object.toJavaObject(${classInfo.className}.class);
+        }
+
+        PageList<${classInfo.className}> pageList = service.selectPage(query, page, limit);
+        JSONObject response = new JSONObject();
+        response.put("code" , 0);
+        response.put("msg"  , "");
+        response.put("data" , null != pageList.getList() ? pageList.getList() : new JSONArray());
+        response.put("count", pageList.getTotalCount());
+        return response.toString();
+    }
+
+    /***
+     * 表单查询
+     */
+    @RequestMapping(value = "/formSelectByKey")
+    @ResponseBody
+    public ${classInfo.className} formSelectByKey(@RequestParam(value = "key", required = false) String  key) {
+        return service.selectByKey(key);
+    }
+
+    /***
+     * 表单插入
+     * @param params Bean对象JSON字符串
+     */
+    @RequestMapping(value = "/formInsert")
+    @ResponseBody
+    public String formInsert(@RequestParam(value = "params", required = false) String  params) {
+        ${classInfo.className} insert = null;
+        if (StringUtils.isNotBlank(params)) {
+            JSONObject object = JSON.parseObject(params);
+            insert = object.toJavaObject(${classInfo.className}.class);
+        }
+
+        int rows = service.insert(insert);
+
+        JSONObject response = new JSONObject();
+        response.put("code" , rows);
+        response.put("msg"  , rows > 0 ? "添加成功" : "添加失败");
+        return response.toString();
+    }
+
+    /***
+     * 表单修改
+     * @param params Bean对象JSON字符串
+     */
+    @RequestMapping(value = "/formUpdate")
+    @ResponseBody
+    public String formUpdate(@RequestParam(value = "params", required = false) String  params) {
+        ${classInfo.className} update = null;
+        if (StringUtils.isNotBlank(params)) {
+            JSONObject object = JSON.parseObject(params);
+            update = object.toJavaObject(${classInfo.className}.class);
+        }
+
+        int rows = service.update(update);
+
+        JSONObject response = new JSONObject();
+        response.put("code" , rows);
+        response.put("msg"  , rows > 0 ? "修改成功" : "修改失败");
+        return response.toString();
+    }
+
+    /***
+     * 表单删除
+     */
+    @RequestMapping(value = "/formDelete")
+    @ResponseBody
+    public int formDelete(@RequestParam(value = "key", required = false) String  key) {
+        return service.delete(key);
     }
 }

@@ -68,13 +68,13 @@
         </#list>
         </#if>
         </set>
-        WHERE ${classInfo.key.columnName} = ${classInfo.key.fieldName}
+        WHERE `${classInfo.key.columnName}` = ${r"#{"}${classInfo.key.fieldName}${r"}"}
     </update>
 
     <!-- 删除 -->
     <delete id="delete">
         DELETE FROM ${classInfo.tableName}
-        WHERE ${classInfo.key.columnName} = ${r"#{"}key${r"}"}
+        WHERE `${classInfo.key.columnName}` = ${r"#{"}key${r"}"}
     </delete>
 
     <!-- 批量删除 -->
@@ -100,7 +100,7 @@
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem >
             ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                and ${r"#{"}${fieldItem.fieldName}${r"}"}
+                and `${fieldItem.fieldName}` = ${r"#{"}${fieldItem.fieldName}${r"}"}
             ${r"</if>"}
             </#list>
             </#if>
@@ -115,7 +115,7 @@
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem>
             ${r"<if test ='null != "}${classInfo.modelName}.${fieldItem.fieldName}${r"'>"}
-                and ${r"#{"}${classInfo.modelName}.${fieldItem.fieldName}${r"}"}
+                and `${fieldItem.fieldName}` = ${r"#{"}${classInfo.modelName}.${fieldItem.fieldName}${r"}"}
             ${r"</if>"}
             </#list>
             </#if>
@@ -125,12 +125,12 @@
 
     <!-- 总量查询 -->
     <select id="total" resultType="java.lang.Integer">
-        SELECT count(${classInfo.key.columnName}) FROM ${classInfo.tableName}
+        SELECT count(*) FROM ${classInfo.tableName}
         <where>
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
         <#list classInfo.fieldList as fieldItem>
             ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                and ${r"#{"}${fieldItem.fieldName}${r"}"}
+                and `${fieldItem.fieldName}` = ${r"#{"}${fieldItem.fieldName}${r"}"}
             ${r"</if>"}
         </#list>
         </#if>

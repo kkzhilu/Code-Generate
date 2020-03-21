@@ -48,11 +48,6 @@ public interface GeneralEngine {
     void genEntity(ClassInfo classInfo);
 
     /**
-     * 生成前端页面(包括html/css/js)
-     */
-    void genUi(ClassInfo classInfo);
-
-    /**
      * 生成配置文件(包括pom.xml,application.yml,application.properties)
      */
     void genConfig();

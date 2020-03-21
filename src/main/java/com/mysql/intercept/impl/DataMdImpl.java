@@ -4,6 +4,8 @@ import com.mysql.bean.ClassInfo;
 import com.mysql.bean.ConfigurationInfo;
 import com.mysql.intercept.CustomEngine;
 import freemarker.template.TemplateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,9 +37,13 @@ public class DataMdImpl implements CustomEngine {
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         }
+
+        logger.info("=== Data Sql Md Part Build Complete.=== ");
     }
 
     private static final String SPACER = File.separator;
 
     private static final String SRC_MAIN_RESOURCE = SPACER + "src" + SPACER + "main" + SPACER + "resources" + SPACER;
+
+    private static Logger logger = LoggerFactory.getLogger(DataMdImpl.class);
 }

@@ -5,6 +5,7 @@ import com.mysql.bean.GlobleConfig;
 import com.mysql.engine.impl.CustomEngineImpl;
 import com.mysql.engine.impl.DefaultEngine;
 import com.mysql.factory.ClassInfoFactory;
+import com.mysql.intercept.CustomEngine;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
@@ -55,7 +56,6 @@ public abstract class AbstractEngine implements GeneralEngine {
             genRepositoryClass(classInfo);
             genService(classInfo);
             genRepositoryXml(classInfo);
-            genUi(classInfo);
             genConfig();
             genFix();
         }

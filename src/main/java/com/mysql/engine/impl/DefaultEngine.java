@@ -143,11 +143,6 @@ public final class DefaultEngine extends AbstractEngine {
     }
 
     @Override
-    public void genUi(ClassInfo classInfo) {
-
-    }
-
-    @Override
     public void genConfig() {
         // 构建文件地址
         String path     = config.getPackageName().replace(".", SPACER);
