@@ -63,7 +63,7 @@
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
         <#list classInfo.fieldList as fieldItem >
         <#if fieldItem.fieldName != classInfo.key.fieldName>
-            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}${fieldItem.columnName} = ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>${r"</if>"}
+            ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}`${fieldItem.columnName}` = ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>${r"</if>"}
         </#if>
         </#list>
         </#if>
@@ -89,7 +89,7 @@
     <select id="selectByKey" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
         FROM ${classInfo.tableName}
-        WHERE ${classInfo.key.columnName} = ${r"#{"}key${r"}"}
+        WHERE `${classInfo.key.columnName}` = ${r"#{"}key${r"}"}
     </select>
 
     <!-- 条件查询 -->
@@ -100,7 +100,7 @@
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem >
             ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                and `${fieldItem.fieldName}` = ${r"#{"}${fieldItem.fieldName}${r"}"}
+                and `${fieldItem.columnName}` = ${r"#{"}${fieldItem.fieldName}${r"}"}
             ${r"</if>"}
             </#list>
             </#if>
@@ -115,7 +115,7 @@
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem>
             ${r"<if test ='null != "}${classInfo.modelName}.${fieldItem.fieldName}${r"'>"}
-                and `${fieldItem.fieldName}` = ${r"#{"}${classInfo.modelName}.${fieldItem.fieldName}${r"}"}
+                and `${fieldItem.columnName}` = ${r"#{"}${classInfo.modelName}.${fieldItem.fieldName}${r"}"}
             ${r"</if>"}
             </#list>
             </#if>
@@ -130,7 +130,7 @@
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
         <#list classInfo.fieldList as fieldItem>
             ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                and `${fieldItem.fieldName}` = ${r"#{"}${fieldItem.fieldName}${r"}"}
+                and `${fieldItem.columnName}` = ${r"#{"}${fieldItem.fieldName}${r"}"}
             ${r"</if>"}
         </#list>
         </#if>
