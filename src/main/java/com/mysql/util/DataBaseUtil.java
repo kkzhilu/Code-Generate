@@ -138,6 +138,7 @@ public class DataBaseUtil {
         typeMapping.put("float"     , "Float");
         typeMapping.put("numeric"   , "Integer");
         typeMapping.put("text"      , "String");
+        typeMapping.put("mediumtext", "String");
         typeMapping.put("longtext"  , "String");
         typeMapping.put("time"      , "Date");
     }
