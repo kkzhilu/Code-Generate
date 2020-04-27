@@ -40,12 +40,17 @@ public final class CustomEngineImpl {
     public static void handleCustom() {
         Set<Class<? extends CustomEngine>> classes = toDos();
         for (Class<? extends CustomEngine> aClass : classes) {
-            try {
-                // 基于反射构建对象 - 调用handle方法
-                CustomEngine engine = aClass.newInstance();
-                engine.handle(GlobleConfig.getGlobleConfig(), ClassInfoFactory.getClassInfoList());
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+
+            // 基于配置项检测是否需要启用自定义实现类
+            if("*;".equals(GlobleConfig.getGlobleConfig().getCustomHandleInclude()) ||
+                    GlobleConfig.getGlobleConfig().getCustomHandleIncludeMap().containsKey(aClass.getSimpleName())) {
+                try {
+                    // 基于反射构建对象 - 调用handle方法
+                    CustomEngine engine = aClass.newInstance();
+                    engine.handle(GlobleConfig.getGlobleConfig(), ClassInfoFactory.getClassInfoList());
+                } catch (InstantiationException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

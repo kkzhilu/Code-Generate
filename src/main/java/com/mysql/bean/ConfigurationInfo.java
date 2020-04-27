@@ -60,6 +60,16 @@ public class ConfigurationInfo {
      */
     private Map<String, String> includeMap;
 
+    /***
+     * 需要处理的自定义Handle名 以 ; 划分
+     */
+    private String customHandleInclude;
+
+    /***
+     * 需要处理的自定义Handle名
+     */
+    private Map<String, String> customHandleIncludeMap;
+
     /**
      * 项目名
      */

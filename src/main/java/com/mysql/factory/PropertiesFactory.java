@@ -29,13 +29,13 @@ public class PropertiesFactory {
      * 配置文件KEYS
      */
     private static final String[] KEYS = {"ip", "port", "driver", "dataBase", "encoding", "loginName", "passWord"
-            , "include", "projectName", "packageName", "authorName", "rootPath"};
+            , "include", "projectName", "packageName", "authorName", "rootPath", "customHandleInclude"};
 
     /***
      * 配置文件默认Values
      */
     private static final String[] VALUES = {"127.0.0.1", "3306", "com.mysql.jdbc.Driver", "db_file", "UTF-8", "root", ""
-            , "*", "Demo", "com.demo", "Kerwin", "F:\\code"};
+            , "*", "Demo", "com.demo", "Kerwin", "F:\\code", "*"};
 
     /***
      * 加载全局配置
@@ -64,6 +64,7 @@ public class PropertiesFactory {
 
         ConfigurationInfo configurationInfo = json.toJavaObject(ConfigurationInfo.class);
         configurationInfo.setIncludeMap(parseInclude(configurationInfo.getInclude()));
+        configurationInfo.setCustomHandleIncludeMap(parseInclude(configurationInfo.getCustomHandleInclude()));
 
         // 解析项目目录地址
         String projectPath = configurationInfo.getRootPath() + File.separator + configurationInfo.getProjectName();
