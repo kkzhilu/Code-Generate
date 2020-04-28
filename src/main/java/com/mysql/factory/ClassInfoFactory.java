@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ClassInfoFactory {
 
-    private static final List<ClassInfo> CLASS_INFO_LIST = new ArrayList<>();
+    private volatile static List<ClassInfo> CLASS_INFO_LIST = new ArrayList<>();
 
     public static List<ClassInfo> getClassInfoList() {
         if (CollectionUtil.isEmpty(CLASS_INFO_LIST)) {
