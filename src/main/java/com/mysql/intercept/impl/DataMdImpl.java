@@ -33,7 +33,7 @@ public class DataMdImpl implements CustomEngine {
         String filePath = config.getProjectPath() + SRC_MAIN_RESOURCE + SPACER + "DataSource.md";
 
         try {
-            this.execute(params, "code-generator/common/DataMd.ftl", filePath);
+            this.execute(params, "code-generator/markdown-file/DataMd.ftl", filePath);
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         }
