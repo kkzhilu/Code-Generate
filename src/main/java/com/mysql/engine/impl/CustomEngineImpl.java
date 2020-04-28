@@ -1,7 +1,5 @@
 package com.mysql.engine.impl;
 
-import com.mysql.bean.ClassInfo;
-import com.mysql.bean.ConfigurationInfo;
 import com.mysql.bean.GlobleConfig;
 import com.mysql.factory.ClassInfoFactory;
 import com.mysql.intercept.CustomEngine;
@@ -9,7 +7,6 @@ import org.reflections.Reflections;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
-import java.util.List;
 import java.util.Set;
 
 /**
