@@ -57,10 +57,12 @@ public class LayUiHtmlImpl implements CustomEngine {
             String table = config.getProjectPath() + STATIC + SPACER + "page" + SPACER + info.getClassName() + "-table.html";
             String add   = config.getProjectPath() + STATIC + SPACER + "page" + SPACER + info.getClassName() + "-add.html";
             String edit  = config.getProjectPath() + STATIC + SPACER + "page" + SPACER + info.getClassName() + "-edit.html";
+            String see   = config.getProjectPath() + STATIC + SPACER + "page" + SPACER + info.getClassName() + "-see.html";
             try {
                 this.execute(params, "code-generator/layui-html/page-file/table.ftl" , table);
                 this.execute(params, "code-generator/layui-html/page-file/add.ftl"   , add);
                 this.execute(params, "code-generator/layui-html/page-file/edit.ftl"  , edit);
+                this.execute(params, "code-generator/layui-html/page-file/see.ftl"   , see);
             } catch (IOException | TemplateException e) {
                 e.printStackTrace();
             }

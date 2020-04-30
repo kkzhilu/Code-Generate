@@ -49,6 +49,7 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-xs data-count-see" lay-event="see">查看</a>
             <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
@@ -161,6 +162,20 @@
                             }
                         });
                     }
+                });
+                return false;
+            } else if (obj.event === 'see') {
+                var index = layer.open({
+                    title: '查看数据',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: RequestUrl('/page/${classInfo.className}-see.html') + '?key=' + data.${classInfo.key.fieldName}
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
                 });
                 return false;
             }
