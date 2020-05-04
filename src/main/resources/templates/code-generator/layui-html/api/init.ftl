@@ -4,7 +4,7 @@
     "href": "page/welcome.html"
   },
   "logoInfo": {
-    "title": "Virus",
+    "title": "${config.projectName}",
     "image": "images/logo.png",
     "href": ""
   },
