@@ -15,7 +15,7 @@
 
 ## 效果演示
 
-![](https://user-gold-cdn.xitu.io/2020/5/5/171e0779e5d893ca?w=1906&h=986&f=gif&s=2550585)
+![](img/code-generate.gif)
 
 
 
@@ -87,19 +87,19 @@ public class App {
 
 **接口访问**
 
-![image-20200505000913778](https://user-gold-cdn.xitu.io/2020/5/5/171e078c676cfdb4?w=1174&h=517&f=png&s=40284%A0%81%E7%94%9F%E6%88%90%E5%99%A8.assets/image-20200505000913778.png)
+![image-20200505000913778](img/image-20200505000913778.png)
 
 
 
 **MD的数据库字段文档**
 
-![image-20200505001007953](https://user-gold-cdn.xitu.io/2020/5/5/171e0794fbf04275?w=1161&h=700&f=png&s=43008)
+![image-20200505000913778](img/image-20200505001007953.png)
 
 
 
 **LayUi的前端展示模块**
 
-![image-20200505001023936](https://user-gold-cdn.xitu.io/2020/5/5/171e07a4f34e2044?w=1921&h=677&f=png&s=85551)
+![image-20200505001023936](img/image-20200505001023936.png)
 
 
 
@@ -129,4 +129,4 @@ public class App {
 
 点我：[GitHub地址]( https://github.com/kkzhilu/Code-Generate/tree/master )
 
-![微信二维码](https://user-gold-cdn.xitu.io/2020/5/5/171e08aa23a0efef?w=487&h=185&f=png&s=17561)
+![微信二维码](img/微信二维码.png)
