@@ -72,7 +72,7 @@
                 {field: '${fieldItem.fieldName}', title: '${fieldItem.fieldComment}', sort: true},
                 </#list>
                 </#if>
-                {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
+                {title: '操作', minWidth: 120, templet: '#currentTableBar', fixed: "right", align: "center"}
             ]],
             limits: [10, 15, 20],
             limit: 15,
