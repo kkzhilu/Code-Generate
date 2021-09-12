@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 
 /**
  * ******************************
- * author：      柯贤铭
+ * author：      Kerwin
  * createTime:   2020/1/9 17:05
  * description:  DBUtil DB连接
  *               单例模式

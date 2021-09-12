@@ -17,7 +17,7 @@ import java.util.Properties;
 
 /**
  * ******************************
- * author：      柯贤铭
+ * author：      Kerwin
  * createTime:   2020/1/9 17:05
  * description:  配置文件解析器
  * version:      V1.0

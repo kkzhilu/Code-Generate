@@ -6,7 +6,7 @@ import java.io.IOException;
 
 /**
  * ******************************
- * author：      柯贤铭
+ * author：      Kerwin
  * createTime:   2020/1/9 17:11
  * description:  单例模式 -> 全局配置信息
  * version:      V1.0

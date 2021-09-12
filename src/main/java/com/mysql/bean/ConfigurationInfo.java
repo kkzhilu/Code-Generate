@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * ******************************
- * author：      柯贤铭
+ * author：      Kerwin
  * createTime:   2020/1/9 17:08
  * description:  解析配置信息
  * version:      V1.0

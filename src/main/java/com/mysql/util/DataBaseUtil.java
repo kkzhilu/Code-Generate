@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * ******************************
- * author：      柯贤铭
+ * author：      Kerwin
  * createTime:   2020/1/9 18:03
  * description:  库解析工具类
  *               解析表和字段

@@ -4,7 +4,7 @@ import com.mysql.bean.ClassInfo;
 
 /**
  * ******************************
- * author：      柯贤铭
+ * author：      Kerwin
  * createTime:   2020/1/10 9:18
  * description:  具体涉及GeneralEngine
  * version:      V1.0

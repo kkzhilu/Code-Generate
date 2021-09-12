@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * ******************************
- * author：      柯贤铭
+ * author：      Kerwin
  * createTime:   2020/1/9 17:08
  * description:  FieldInfo 字段信息
  * version:      V1.0
